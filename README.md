@@ -26,6 +26,8 @@ Add the module to the config
 ]
 ```
 
-## Usage
+## APIs 
 
-*Usage description*
+> The  module name is equal to the rest api prefix. When you register the module as `foobar` in the config the api would be `/foobar/menu?langId=x`.
+
++ Returns all contains indexed by its alias with all pages as a tree: `api/menu?langId=1`

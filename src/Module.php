@@ -6,7 +6,12 @@ use luya\base\Module as BaseModule;
 
 class Module extends BaseModule
 {
-    public $urlRules = [
-        'foo-bar' => 'foo',
-    ];
+    public function init()
+    {
+        parent::init();
+
+        $this->setUrlRules([
+            'foo-bar' => "{$this->id}/test/index"
+        ]);
+    }
 }
