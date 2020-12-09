@@ -2,24 +2,28 @@
   <img src="https://raw.githubusercontent.com/luyadev/luya/master/docs/logo/luya-logo-0.2x.png" alt="LUYA Logo"/>
 </p>
 
-# LUYA *VENDOR/NAME* module/extension
+# LUYA HEADLESS CMS BRIDGE
 
 [![LUYA](https://img.shields.io/badge/Powered%20by-LUYA-brightgreen.svg)](https://luya.io)
 
-*Package description*
+This module provides and out of the box ready API in order to consume the CMS informations from a PUBLIC, CORS-ready, Read-Only API.
 
 ## Installation
 
 Install the extension through composer:
 
 ```sh
-composer require VENDOR/NAME
+composer require luyadev/luya-headless-cms
 ```
 
-Run the import command afterwards:
+Add the module to the config
 
-```sh
-./luya import
+```php
+'modules' => [
+    'api' => [
+        'class' => 'luya\headless\cms\Module',
+    ]
+]
 ```
 
 ## Usage
