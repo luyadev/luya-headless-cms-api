@@ -1,0 +1,26 @@
+{
+	"name" : "VENDOR/NAME",
+	"description" : "",
+	"type" : "luya-extension",
+	"keywords" : ["luya"],
+	"license": "MIT",
+	"authors" : [
+		{
+			"name": "",
+			"email": ""
+		}
+	],
+	"require-dev" : {
+	    "luyadev/luya-testsuite" : "^2.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"VENDOR\\NAME\\" : "src/"
+		}
+	},
+	"autoload-dev" : {
+       "psr-4" : {
+           "VENDOR\\NAME\\tests\\" : "tests/"
+       }
+    }
+}
