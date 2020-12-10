@@ -60,8 +60,8 @@ class NavItemPage extends ActiveRecord
                     'block_id' => $block->block_id,
                     'block_name' => Inflector::camelize($block->block->class),
                     'is_container' => $object->getIsContainer(),
-                    'values' => $block->json_config_values,
-                    'cfgs' => $block->json_config_cfg_values,
+                    'values' => $block->getEnsuredValues(),
+                    'cfgs' => $block->getEnsuredConfigs(),
                 ];
                 
                 if ($object->getIsContainer()) {

@@ -31,4 +31,24 @@ class PageBlock extends ActiveRecord
     {
         return $this->hasOne(Block::class, ['id' => 'block_id']);
     }
+
+    public function getEnsuredValues()
+    {
+        $values = [];
+        foreach ($this->block->classObject->getConfigVarsExport() as $var) {
+            $values[$var['var']] = $this->json_config_values && array_key_exists($var['var'], $this->json_config_values) ? $this->json_config_values[$var['var']] : null;
+        }
+
+        return $values;
+    }
+
+    public function getEnsuredConfigs()
+    {
+        $values = [];
+        foreach ($this->block->classObject->getConfigCfgsExport() as $var) {
+            $values[$var['var']] = $this->json_config_cfg_values && array_key_exists($var['var'], $this->json_config_cfg_values) ? $this->json_config_cfg_values[$var['var']] : null;
+        }
+
+        return $values;
+    }
 }
