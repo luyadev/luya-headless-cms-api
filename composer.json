@@ -1,5 +1,5 @@
 {
-	"name" : "luyadev/luya-headless-cms",
+	"name" : "luyadev/luya-headless-cms-api",
 	"description" : "The bridge between your SPA application and the LUYA CMS Module.",
 	"type" : "luya-module",
 	"keywords" : ["luya", "headless", "cms", "api", "bridge"],
@@ -18,12 +18,12 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"luya\\headless\\cms\\" : "src/"
+			"luya\\headless\\cms\\api\\" : "src/"
 		}
 	},
 	"autoload-dev" : {
        "psr-4" : {
-           "luya\\headless\\cms\\tests\\" : "tests/"
+			"luya\\headless\\cms\\api\\tests\\" : "tests/"
        }
 	},
 	

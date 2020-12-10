@@ -1,9 +1,9 @@
 <?php
 
-namespace luya\headless\cms\controllers;
+namespace luya\headless\cms\api\controllers;
 
-use luya\headless\cms\BaseController;
-use luya\headless\cms\models\Container;
+use luya\headless\cms\api\BaseController;
+use luya\headless\cms\api\models\Container;
 use yii\data\ActiveDataProvider;
 
 class MenuController extends BaseController

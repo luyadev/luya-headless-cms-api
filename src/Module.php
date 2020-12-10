@@ -1,6 +1,6 @@
 <?php
 
-namespace luya\headless\cms;
+namespace luya\headless\cms\api;
 
 use luya\base\Module as BaseModule;
 

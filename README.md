@@ -13,6 +13,8 @@ This module provides and out of the box ready **API** in order to consume the CM
 + Only needed informations will be exposed
 + Its optimized with caching, which makes it very fast! (@TBD ;-))
 
+This can turn your exists LUYA website into an API which you can used to build your website with a JavaScript Framework like VUE or Angular!
+
 ## Installation
 
 Install the extension through composer:
@@ -26,7 +28,7 @@ Add the module to the config
 ```php
 'modules' => [
     'api' => [
-        'class' => 'luya\headless\cms\Module',
+        'class' => 'luya\headless\cms\api\Module',
     ]
 ]
 ```

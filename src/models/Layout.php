@@ -1,6 +1,6 @@
 <?php
 
-namespace luya\headless\cms\models;
+namespace luya\headless\cms\api\models;
 
 use luya\behaviors\JsonBehavior;
 use yii\db\ActiveRecord;

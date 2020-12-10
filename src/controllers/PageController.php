@@ -1,9 +1,9 @@
 <?php
 
-namespace luya\headless\cms\controllers;
+namespace luya\headless\cms\api\controllers;
 
-use luya\headless\cms\BaseController;
-use luya\headless\cms\models\NavItem;
+use luya\headless\cms\api\BaseController;
+use luya\headless\cms\api\models\NavItem;
 
 class PageController extends BaseController
 {
