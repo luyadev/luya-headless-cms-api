@@ -39,3 +39,58 @@ Add the module to the config
 
 + Returns all contains indexed by its alias with all pages as a tree: `api/menu?langId=1`
 + Returns the placeholders with all blocks for a certain page: `api/page?id=8`
+
+## VueJs
+
+proof of concept
+
+Create a component for the given Element, in this case we are using the Html Block `LuyaCmsFrontendBlocksHtmlBlock.vue`:
+
+```
+<template>
+  <div v-html="block.values.html" />
+</template>
+
+<script>
+export default {
+  props: {
+    block: Object
+  }
+}
+</script>
+```
+
+Create a component which loads the page and foreaches the components:
+
+```
+<template>
+  <div v-if="isLoaded">
+      <h1>{{ this.title }}</h1>
+      <component v-for="item in contentPlaceholder" :key="item.id" :is="item.block_name" :block="item" />
+  </div>
+</template>
+
+<script>
+import LuyaCmsFrontendBlocksHtmlBlock from '../../components/LuyaCmsFrontendBlocksHtmlBlock.vue'
+
+export default {
+  components: { LuyaCmsFrontendBlocksHtmlBlock },
+  data () {
+    return {
+      isLoaded: false,
+      response: null
+    }
+  },
+  computed: {
+    contentPlaceholder () {
+      return this.isLoaded ? this.response.placeholders.content : null
+    }
+  },
+  async mounted () {
+    const { data } = await this.$axios('page?id=' + this.$route.params.slug)
+    this.response = data
+    this.isLoaded = true
+  }
+}
+</script>
+```
