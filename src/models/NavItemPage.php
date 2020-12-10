@@ -2,6 +2,7 @@
 
 namespace luya\headless\cms\models;
 
+use luya\cms\base\BlockInterface;
 use luya\helpers\Inflector;
 use yii\db\ActiveRecord;
 
@@ -51,16 +52,23 @@ class NavItemPage extends ActiveRecord
         foreach ($blocks as $block) {
             if ($block->prev_id == $prevId) {
                 $placeholders = $this->buildTree($blocks, $block->id, $block->placeholder_var);
+
+                /** @var BlockInterface $object */
+                $object = $block->block->getClassObject();
                 $newItem = [
                     'id' => $block->id,
                     'block_id' => $block->block_id,
                     'block_name' => Inflector::camelize($block->block->class),
+                    'is_container' => $object->getIsContainer(),
                     'values' => $block->json_config_values,
                     'cfgs' => $block->json_config_cfg_values,
                 ];
-
-                if (count($placeholders) > 0) {
-                    $newItem['placeholders'] = $placeholders;
+                
+                if ($object->getIsContainer()) {
+                    // ensure all placeholders exists
+                    foreach ($object->getConfigPlaceholdersExport() as $placeholderName) {
+                        $newItem['placeholders'][$placeholderName['var']] = array_key_exists($placeholderName['var'], $placeholders) ? $placeholders[$placeholderName['var']] : [];
+                    }
                 }
 
                 $result[$block->placeholder_var][] = $newItem;
