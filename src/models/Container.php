@@ -31,10 +31,10 @@ class Container extends ActiveRecord
         return $this->buildTree($container->items, 0);
     }
 
-    function buildTree(array $items, $parentId) {
+    function buildTree(array $items, $parentId)
+    {
         $result = [];
         foreach ($items as $item) {
-
             if ($item->nav->parent_nav_id == $parentId) {
                 $newItem = [
                     'id' => $item->id,
@@ -45,14 +45,12 @@ class Container extends ActiveRecord
                     'description' => $item->description,
                     'children' => $this->buildTree($items, $item->id),
                 ];
+
+                $newItem['has_children'] = count($newItem['children']) > 0 ? true : false;
                 $result[] = $newItem;
             }
         }
       
-        if (count($result) > 0) {
-            return $result;
-        }
-
-        return [];
+        return $result;
     }
 }
