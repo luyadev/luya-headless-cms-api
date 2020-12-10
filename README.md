@@ -20,7 +20,7 @@ This can turn your exists LUYA website into an API which you can used to build y
 Install the extension through composer:
 
 ```sh
-composer require luyadev/luya-headless-cms
+composer require luyadev/luya-headless-cms-api
 ```
 
 Add the module to the config
