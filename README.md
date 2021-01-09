@@ -37,16 +37,16 @@ Add the module to the config
 
 > The  module name is equal to the rest api prefix. When you register the module as `foobar` in the config the api would be `/foobar/menu?langId=x`.
 
-+ Returns all contains indexed by its alias with all pages as a tree: `api/menu?langId=1`
-+ Returns the placeholders with all blocks for a certain page: `api/page?id=8`
++ `api/menu`: Returns the page tree (menu) for a given language: `api/menu?langId=1`
++ `api/page`: Returns the placeholders with all blocks for a certain page: `api/page?id=8`
 
-## VueJs
+## VUE
 
 proof of concept
 
 Create a component for the given Element, in this case we are using the Html Block `LuyaCmsFrontendBlocksHtmlBlock.vue`:
 
-```
+```vue
 <template>
   <div v-html="block.values.html" />
 </template>
@@ -62,7 +62,7 @@ export default {
 
 Create a component which loads the page and foreaches the components:
 
-```
+```vue
 <template>
   <div v-if="isLoaded">
       <h1>{{ this.title }}</h1>
