@@ -37,8 +37,10 @@ Add the module to the config
 
 > The  module name is equal to the rest api prefix. When you register the module as `foobar` in the config the api would be `/foobar/menu?langId=x`.
 
-+ `api/menu`: Returns the page tree (menu) for a given language: `api/menu?langId=1`
-+ `api/page`: Returns the placeholders with all blocks for a certain page: `api/page?id=8`
++ `api/menu?langId=`: Returns the page tree (menu) for a given language `api/menu?langId=1`. In order to return only visible items add `&onlyVisible=1`
++ `api/menu/containers`: Just returns all available containers
++ `api/page?id=`: Returns the placeholders with all blocks for a certain page: `api/page?id=8`
++ `api/page/home?langId=`: Returns the content of the homepage for the given language
 
 ## VUE
 

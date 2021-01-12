@@ -8,12 +8,20 @@ use yii\data\ActiveDataProvider;
 
 class MenuController extends BaseController
 {
-    public function actionIndex($langId)
+    public function actionIndex($langId, $onlyVisible = 0)
     {
         $data = [];
-        foreach (Container::find()->joinWith(['items.nav'])
-            ->andWhere(['lang_id' => $langId, 'is_offline' => false, 'is_draft' => false])
-            ->all() as $container) {
+
+        $query = Container::find()
+            ->joinWith(['items.nav'])
+            ->andWhere(['lang_id' => $langId, 'is_offline' => false, 'is_draft' => false]);
+
+        if ($onlyVisible) {
+            $query->andWhere(['is_hidden' => false]);
+        }
+
+
+        foreach ($query->all() as $container) {
             $data[$container->alias] = [
                 'id' => $container->id,
                 'name' => $container->name,
