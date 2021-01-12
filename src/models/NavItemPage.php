@@ -4,6 +4,7 @@ namespace luya\headless\cms\api\models;
 
 use luya\cms\base\BlockInterface;
 use luya\helpers\Inflector;
+use ReflectionClass;
 use yii\db\ActiveRecord;
 
 class NavItemPage extends ActiveRecord
@@ -55,10 +56,14 @@ class NavItemPage extends ActiveRecord
 
                 /** @var BlockInterface $object */
                 $object = $block->block->getClassObject();
+
+                $reflect = new ReflectionClass($object);
+
                 $newItem = [
                     'id' => $block->id,
                     'block_id' => $block->block_id,
-                    'block_name' => Inflector::camelize($block->block->class),
+                    'block_name' => $reflect->getShortName(),
+                    'full_block_name' => Inflector::camelize($block->block->class),
                     'is_container' => $object->getIsContainer(),
                     'values' => $block->getEnsuredValues(),
                     'cfgs' => $block->getEnsuredConfigs(),
