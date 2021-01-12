@@ -11,7 +11,9 @@ class MenuController extends BaseController
     public function actionIndex($langId)
     {
         $data = [];
-        foreach (Container::find()->joinWith(['items.nav'])->andWhere(['lang_id' => $langId])->all() as $container) {
+        foreach (Container::find()->joinWith(['items.nav'])
+            ->andWhere(['lang_id' => $langId, 'is_offline' => false, 'is_draft' => false])
+            ->all() as $container) {
             $data[$container->alias] = [
                 'id' => $container->id,
                 'name' => $container->name,

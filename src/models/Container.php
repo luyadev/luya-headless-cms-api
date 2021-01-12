@@ -34,11 +34,13 @@ class Container extends ActiveRecord
     function buildTree(array $items, $parentId)
     {
         $result = [];
+        /** @var NavItem $item */
         foreach ($items as $item) {
             if ($item->nav->parent_nav_id == $parentId) {
                 $newItem = [
                     'id' => $item->id,
                     'nav_id' => $item->nav_id,
+                    'is_hidden' => $item->nav->is_hidden,
                     'is_home' => $item->nav->is_home,
                     'title' => $item->title,
                     'slug' => $item->alias,
