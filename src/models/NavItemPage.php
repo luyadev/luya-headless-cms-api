@@ -62,6 +62,7 @@ class NavItemPage extends ActiveRecord
                     'is_container' => $object->getIsContainer(),
                     'values' => $block->getEnsuredValues(),
                     'cfgs' => $block->getEnsuredConfigs(),
+                    'extras' => $object->getExtraVarValues(),
                 ];
                 
                 if ($object->getIsContainer()) {
