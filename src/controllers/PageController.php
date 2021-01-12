@@ -5,19 +5,21 @@ namespace luya\headless\cms\api\controllers;
 use luya\headless\cms\api\BaseController;
 use luya\headless\cms\api\models\Nav;
 use luya\headless\cms\api\models\NavItem;
+use luya\helpers\StringHelper;
 use yii\web\NotFoundHttpException;
 
 class PageController extends BaseController
 {
     public function actionIndex($id)
     {
+        if (StringHelper::isNummeric($id)) {
+            $attribute = 'id';
+        } else {
+            $attribute = 'alias';
+        }
         $navItem = NavItem::find()
             ->with(['currentPage.blocks.block'])
-            ->where([
-                'or',
-                ['=', 'id', $id],
-                ['=', 'alias', $id]
-            ])
+            ->where([$attribute => $id])
             ->one();
 
         if (!$navItem) {
