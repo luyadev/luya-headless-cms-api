@@ -56,6 +56,8 @@ class NavItemPage extends ActiveRecord
 
                 /** @var BlockInterface $object */
                 $object = $block->block->getClassObject();
+                $object->setVarValues($block->getEnsuredValues());
+                $object->setCfgValues($block->getEnsuredConfigs());
 
                 $reflect = new ReflectionClass($object);
 
