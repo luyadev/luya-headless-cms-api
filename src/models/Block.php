@@ -13,8 +13,6 @@ class Block extends ActiveRecord
         return 'cms_block';
     }
 
-    private $_object;
-
     /**
      * Returns the origin block object based on the current active record entry.
      *
@@ -22,10 +20,6 @@ class Block extends ActiveRecord
      */
     public function getClassObject()
     {
-        if ($this->_object === null) {
-            $this->_object = Yii::createObject(['class' => $this->class]);
-        }
-
-        return $this->_object;
+        return Yii::createObject(['class' => $this->class]);
     }
 }
