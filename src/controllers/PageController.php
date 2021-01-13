@@ -23,7 +23,21 @@ class PageController extends BaseController
             ->one();
 
         if (!$navItem) {
-            throw new NotFoundHttpException("nav item not found");
+            throw new NotFoundHttpException("nav item {$id} not found");
+        }
+
+        return $this->toResponse($navItem);
+    }
+
+    public function actionNav($id, $langId)
+    {
+        $navItem = NavItem::find()
+            ->with(['currentPage.blocks.block', 'nav.properties.adminProperty'])
+            ->where(['nav_id' => $id, 'lang_id' => $langId])
+            ->one();
+
+        if (!$navItem) {
+            throw new NotFoundHttpException("nav {$id} with language {$langId} not found");
         }
 
         return $this->toResponse($navItem);

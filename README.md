@@ -40,6 +40,7 @@ Add the module to the config
 + `api/menu?langId=`: Returns the page tree (menu) for a given language `api/menu?langId=1`. In order to return only visible items add `&onlyVisible=1`
 + `api/menu/containers`: Just returns all available containers
 + `api/page?id=`: Returns the placeholders with all blocks for a certain page: `api/page?id=8`
++ `api/page/nav?id=&langId=`: Returns the placeholders with all blocks for a certain nav id with the corresponding language id
 + `api/page/home?langId=`: Returns the content of the homepage for the given language
 
 ## VUE
