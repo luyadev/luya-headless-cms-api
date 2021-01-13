@@ -18,7 +18,7 @@ class PageController extends BaseController
             $attribute = 'alias';
         }
         $navItem = NavItem::find()
-            ->with(['currentPage.blocks.block'])
+            ->with(['currentPage.blocks.block', 'nav.properties.adminProperty'])
             ->where([$attribute => $id])
             ->one();
 
@@ -52,6 +52,7 @@ class PageController extends BaseController
             'page' => $navItem->toArray(['id', 'nav_id', 'lang_id', 'title', 'alias', 'description', 'keywords', 'title_tag']),
             'placeholders' => $navItem->currentPage->getContent(),
             'layout' => $navItem->currentPage->layout->toArray(['id', 'name']),
+            'properties' => $navItem->nav->formatedProperties(),
         ];
     }
     // expand=currentPage.blocks,currentPage.layout
