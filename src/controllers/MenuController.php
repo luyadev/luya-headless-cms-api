@@ -20,7 +20,6 @@ class MenuController extends BaseController
             $query->andWhere(['is_hidden' => false]);
         }
 
-
         foreach ($query->all() as $container) {
             $data[$container->alias] = [
                 'id' => $container->id,

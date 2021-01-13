@@ -2,6 +2,7 @@
 
 namespace luya\headless\cms\api\models;
 
+use luya\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 
 class Container extends ActiveRecord
@@ -39,6 +40,7 @@ class Container extends ActiveRecord
             if ($item->nav->parent_nav_id == $parentId) {
                 $newItem = [
                     'id' => $item->id,
+                    'index' => $item->nav->sort_index,
                     'nav_id' => $item->nav_id,
                     'is_hidden' => $item->nav->is_hidden,
                     'is_home' => $item->nav->is_home,
@@ -52,6 +54,8 @@ class Container extends ActiveRecord
                 $result[] = $newItem;
             }
         }
+
+        ArrayHelper::multisort($result, 'index', SORT_ASC);
       
         return $result;
     }
