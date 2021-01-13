@@ -2,6 +2,7 @@
 
 namespace luya\headless\cms\api\models;
 
+use luya\admin\models\Property as ModelsProperty;
 use luya\cms\models\Property;
 use yii\db\ActiveRecord;
 
@@ -39,6 +40,14 @@ class Nav extends ActiveRecord
             ];
         }
 
-        return $values;
+        foreach (ModelsProperty::find()->all() as $adminProp) {
+            $varName = $adminProp->createObject(null)->varName();
+
+            if (!array_key_exists($varName, $values)) {
+                $values[$varName] = null;
+            }
+        }
+
+        return (object) $values;
     }
 }
