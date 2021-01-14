@@ -13,8 +13,9 @@ class MenuController extends BaseController
         $data = [];
 
         $query = Container::find()
-            ->joinWith(['items.nav'])
-            ->andWhere(['lang_id' => $langId, 'is_offline' => false, 'is_draft' => false]);
+            ->joinWith(['items' => function($q) use ($langId) {
+                $q->andOnCondition(['lang_id' => $langId])->joinWith(['nav']);
+            }]);
 
         if ($onlyVisible) {
             $query->andWhere(['is_hidden' => false]);

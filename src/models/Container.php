@@ -19,7 +19,9 @@ class Container extends ActiveRecord
 
     public function getNavs()
     {
-        return $this->hasMany(Nav::class, ['nav_container_id' => 'id'])->orderBy(['sort_index' => SORT_ASC]);
+        return $this->hasMany(Nav::class, ['nav_container_id' => 'id'])
+        ->andOnCondition(['is_offline' => false, 'is_draft' => false])
+        ->orderBy(['sort_index' => SORT_ASC]);
     }
 
     public function getItems()
@@ -29,25 +31,28 @@ class Container extends ActiveRecord
 
     public function containerToMenu(Container $container)
     {
-        return $this->buildTree($container->items, 0);
+        return $this->buildTree($container->items, 0, '');
     }
 
-    function buildTree(array $items, $parentId)
+    function buildTree(array $items, $parentId, $pathPrefix)
     {
         $result = [];
         /** @var NavItem $item */
         foreach ($items as $item) {
             if ($item->nav->parent_nav_id == $parentId) {
+                $currentPath = empty($pathPrefix) ? $item->alias : "{$pathPrefix}/{$item->alias}";
                 $newItem = [
                     'id' => $item->id,
                     'index' => $item->nav->sort_index,
                     'nav_id' => $item->nav_id,
+                    'lang_id' => $item->lang_id,
                     'is_hidden' => $item->nav->is_hidden,
                     'is_home' => $item->nav->is_home,
                     'title' => $item->title,
                     'slug' => $item->alias,
+                    'path' => $currentPath,
                     'description' => $item->description,
-                    'children' => $this->buildTree($items, $item->id),
+                    'children' => $this->buildTree($items, $item->id, $currentPath),
                 ];
 
                 $newItem['has_children'] = count($newItem['children']) > 0 ? true : false;
