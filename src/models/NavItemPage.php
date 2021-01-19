@@ -3,6 +3,7 @@
 namespace luya\headless\cms\api\models;
 
 use luya\cms\base\BlockInterface;
+use luya\helpers\ArrayHelper;
 use luya\helpers\Inflector;
 use ReflectionClass;
 use yii\db\ActiveRecord;
@@ -63,7 +64,7 @@ class NavItemPage extends ActiveRecord
 
                 $newItem = [
                     'id' => $block->id,
-                    'sort_index' => $block->sort_index,
+                    'index' => $block->sort_index,
                     'block_id' => $block->block_id,
                     'block_name' => $reflect->getShortName(),
                     'full_block_name' => Inflector::camelize($block->block->class),
@@ -83,6 +84,8 @@ class NavItemPage extends ActiveRecord
                 $result[$block->placeholder_var][] = $newItem;
             }
         }
+
+        ArrayHelper::multisort($result, 'index', SORT_ASC);
 
         return $result;
     }
