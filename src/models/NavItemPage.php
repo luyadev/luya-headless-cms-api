@@ -63,6 +63,7 @@ class NavItemPage extends ActiveRecord
 
                 $newItem = [
                     'id' => $block->id,
+                    'sort_index' => $block->sort_index,
                     'block_id' => $block->block_id,
                     'block_name' => $reflect->getShortName(),
                     'full_block_name' => Inflector::camelize($block->block->class),

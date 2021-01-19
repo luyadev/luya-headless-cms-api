@@ -4,10 +4,31 @@ namespace luya\headless\cms\api\controllers;
 
 use luya\headless\cms\api\BaseController;
 use luya\headless\cms\api\models\Container;
+use luya\web\filters\ResponseCache;
+use Yii;
+use yii\caching\DbDependency;
 use yii\data\ActiveDataProvider;
 
 class MenuController extends BaseController
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['cacheFilter'] = [
+            'class' => ResponseCache::class,
+            'actions' => ['index'],
+            'dependency' => [
+                'class' => DbDependency::class,
+                'sql' => 'SELECT timestamp_update FROM cms_nav_item WHERE lang_id=:lang_id',
+                'params' => [':lang_id' => Yii::$app->request->get('langId', 0)]
+            ]
+        ];
+        return $behaviors;
+    }
+
     public function actionIndex($langId, $onlyVisible = 0)
     {
         $data = [];
