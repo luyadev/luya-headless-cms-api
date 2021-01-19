@@ -85,7 +85,9 @@ class NavItemPage extends ActiveRecord
             }
         }
 
-        ArrayHelper::multisort($result, 'index', SORT_ASC);
+        foreach ($result as $placederVar => $items) {
+            ArrayHelper::multisort($result[$placederVar], 'index', SORT_ASC);
+        }
 
         return $result;
     }
