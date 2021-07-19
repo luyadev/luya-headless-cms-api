@@ -20,7 +20,7 @@ class Container extends ActiveRecord
     public function getNavs()
     {
         return $this->hasMany(Nav::class, ['nav_container_id' => 'id'])
-        ->andOnCondition(['is_offline' => false, 'is_draft' => false])
+        ->andOnCondition(['is_offline' => false, 'is_draft' => false, 'cms_nav.is_deleted' => false])
         ->orderBy(['sort_index' => SORT_ASC]);
     }
 
