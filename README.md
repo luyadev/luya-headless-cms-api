@@ -37,15 +37,116 @@ Add the module to the config
 
 > The  module name is equal to the rest api prefix. When you register the module as `foobar` in the config the api would be `/foobar/menu?langId=x`.
 
-+ `api/menu?langId=`: Returns the page tree (menu) for a given language `api/menu?langId=1`. In order to return only visible items add `&onlyVisible=1`
-+ `api/menu/containers`: Just returns all available containers
-+ `api/page?id=`: Returns the placeholders with all blocks for a certain page: `api/page?id=8`
-+ `api/page/nav?id=&langId=`: Returns the placeholders with all blocks for a certain nav id with the corresponding language id
-+ `api/page/home?langId=`: Returns the content of the homepage for the given language
+#### Menu
+
+|API|Example|Description
+|---|-------|-----------
+|`api/menu/containers`||Returns all available CMS Menu Containers. LUYA will create a `content` default container while setup.
+|`api/menu?langId=`|```json{
+  "default": {
+    "id": 1,
+    "name": "Menu",
+    "alias": "default",
+    "items": [
+      {
+        "id": 1,
+        "index": 1,
+        "nav_id": 1,
+        "lang_id": 1,
+        "is_hidden": true,
+        "is_home": true,
+        "title": "Startseite",
+        "title_tag": null,
+        "alias": "startseite",
+        "path": "startseite",
+        "description": null,
+        "children": [],
+        "has_children": false
+      },
+      {
+        "id": 2,
+        "index": 2,
+        "nav_id": 2,
+        "lang_id": 1,
+        "is_hidden": false,
+        "is_home": false,
+        "title": "Lets Talk",
+        "title_tag": "",
+        "alias": "letstalk",
+        "path": "letstalk",
+        "description": "Genuss und Freude.",
+        "children": [],
+        "has_children": false
+      },
+      {
+        "id": 3,
+        "index": 4,
+        "nav_id": 3,
+        "lang_id": 1,
+        "is_hidden": false,
+        "is_home": false,
+        "title": "About Me",
+        "title_tag": null,
+        "alias": "aboutme",
+        "path": "aboutme",
+        "description": null,
+        "children": [],
+        "has_children": false
+      }
+    ]
+  },
+  "footer": {
+    "id": 2,
+    "name": "Footer",
+    "alias": "footer",
+    "items": [
+      {
+        "id": 6,
+        "index": 1,
+        "nav_id": 6,
+        "lang_id": 1,
+        "is_hidden": false,
+        "is_home": false,
+        "title": "Datenschutz",
+        "title_tag": null,
+        "alias": "datenschutz",
+        "path": "datenschutz",
+        "description": null,
+        "children": [],
+        "has_children": false
+      },
+      {
+        "id": 7,
+        "index": 2,
+        "nav_id": 7,
+        "lang_id": 1,
+        "is_hidden": false,
+        "is_home": false,
+        "title": "Impressum",
+        "title_tag": null,
+        "alias": "impressum",
+        "path": "impressum",
+        "description": null,
+        "children": [],
+        "has_children": false
+      }
+    ]
+  }
+}```|Returns the page tree (menu) for a given language `api/menu?langId=1`. In order to return only visible items add `&onlyVisible=1`
+
+#### Content 
+
+|API|Example|Description
+|---|-------|-----------
+|`api/page?id=`||Returns the placeholders with all blocks for a certain page: `api/page?id=8`
+|`api/page/nav?id=&langId=`||Returns the placeholders with all blocks for a certain nav id with the corresponding language id
+|`api/page/home?langId=`||Returns the content of the homepage for the given language
+
+> All APIs expect a GET request.
 
 ## VUE
 
-proof of concept
+> Proof of concept example in VUE
 
 Create a component for the given Element, in this case we are using the Html Block `LuyaCmsFrontendBlocksHtmlBlock.vue`:
 
@@ -69,7 +170,12 @@ Create a component which loads the page and foreaches the components:
 <template>
   <div v-if="isLoaded">
       <h1>{{ this.title }}</h1>
-      <component v-for="item in contentPlaceholder" :key="item.id" :is="item.block_name" :block="item" />
+      <component 
+        v-for="item in contentPlaceholder" 
+        :key="item.id" 
+        :is="item.block_name" 
+        :block="item"
+      />
   </div>
 </template>
 
@@ -78,15 +184,13 @@ import LuyaCmsFrontendBlocksHtmlBlock from '../../components/LuyaCmsFrontendBloc
 
 export default {
   components: { LuyaCmsFrontendBlocksHtmlBlock },
-  data () {
-    return {
-      isLoaded: false,
-      response: null
-    }
-  },
+  data: () => ({
+    isLoaded: false,
+    response: null
+  }),
   computed: {
     contentPlaceholder () {
-      return this.isLoaded ? this.response.placeholders.content : null
+      return this.isLoaded ? this.response.placeholders.content : []
     }
   },
   async mounted () {
