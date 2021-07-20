@@ -156,7 +156,50 @@ All APIs which helps you to build the content for a given page, mostly by handli
 <details>
 <summary>/api/page?id={int|string} ─ Get Page Blocks</summary>
 
-Returns the placeholders with all blocks for a certain page (nav item) `api/page?id=8`. Its also possible to provide the page slug (alias) `api/page?id=home`.
+Returns the placeholders with all blocks for a certain page (nav item) `api/page?id=8`. Its also possible to provide the page slug (alias) `api/page?id=home`. The response contains an object with `page`, `placeholders`, `layout` and `properties`.
+
+Example Response:
+
+```json
+{
+   "page":{
+      "id":1,
+      "nav_id":1,
+      "lang_id":1,
+      "title":"Startseite",
+      "alias":"startseite",
+      "description":null,
+      "keywords":null,
+      "title_tag":null
+   },
+   "placeholders":{
+      "content":[
+         {
+            "id":13,
+            "index":0,
+            "block_id":2,
+            "block_name":"HtmlBlock",
+            "full_block_name":"LuyaCmsFrontendBlocksHtmlBlock",
+            "is_container":false,
+            "values":{
+               "html":"<h1 class=\"display-2 font-weight-light\">.......</h4>"
+            },
+            "cfgs":{
+               "raw":null
+            },
+            "extras":[]
+         },
+      ]
+   },
+   "layout":{
+      "id":1,
+      "name":"Default"
+   },
+   "properties":{
+      "VarName":null
+   }
+}
+```
 </details>
 
 <details>
