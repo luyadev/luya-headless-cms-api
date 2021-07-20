@@ -50,7 +50,7 @@ Returns all available CMS Menu Containers. LUYA will create a `content` default 
 </details>
 
 <details>
-<summary>/api/menu?langId= ─ Get Menu Tree</summary>
+<summary>/api/menu?langId={int} ─ Get Menu Tree</summary>
 
 Returns the page tree (menu) for a given language `api/menu?langId=1`. In order to return only visible items add `&onlyVisible=1`. Example response:
 
@@ -154,19 +154,19 @@ Returns the page tree (menu) for a given language `api/menu?langId=1`. In order 
 All APIs which helps you to build the content for a given page, mostly by handling the blocks for a given page id.
 
 <details>
-<summary>/api/page?id= ─ Get Page Blocks</summary>
+<summary>/api/page?id={int|string} ─ Get Page Blocks</summary>
 
 Returns the placeholders with all blocks for a certain page (nav item) `api/page?id=8`. Its also possible to provide the page slug (alias) `api/page?id=home`.
 </details>
 
 <details>
-<summary>/api/page/nav?id=&langId= ─ Get Page Language Context Blocks</summary>
+<summary>/api/page/nav?id={int}&langId={int} ─ Get Page Language Context Blocks</summary>
 
 Returns the placeholders with all blocks for a certain nav id with the corresponding language id.
 </details>
 
 <details>
-<summary>/api/page/home?langId= ─ Get Homepage Page Blocks</summary>
+<summary>/api/page/home?langId={int} ─ Get Homepage Page Blocks</summary>
 
 Returns the content of the homepage for the given language.
 </details>
