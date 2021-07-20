@@ -44,13 +44,13 @@ All APIs expect a GET request.
 All APIs which are handling Menu Data - helping you to build the navigation in layout files.
 
 <details>
-<summary>#### ➤ api/menu/containers</summary>
+<summary>**api/menu/containers**</summary>
 
 Returns all available CMS Menu Containers. LUYA will create a `content` default container while setup.
 </details>
 
 <details>
-<summary>#### ➤ api/menu?langId=</summary>
+<summary>**api/menu?langId=**</summary>
 
 Returns the page tree (menu) for a given language `api/menu?langId=1`. In order to return only visible items add `&onlyVisible=1`. Example response:
 
