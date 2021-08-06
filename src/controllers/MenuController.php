@@ -19,7 +19,7 @@ class MenuController extends BaseController
         $behaviors = parent::behaviors();
         $behaviors['cacheFilter'] = [
             'class' => ResponseCache::class,
-            'actions' => ['index'],
+            'only' => ['index'],
             'dependency' => [
                 'class' => DbDependency::class,
                 'sql' => 'SELECT timestamp_update FROM cms_nav_item WHERE lang_id=:lang_id',
