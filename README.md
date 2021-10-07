@@ -27,6 +27,7 @@ Add the module to the config
 
 ```php
 'modules' => [
+    //...
     'api' => [
         'class' => 'luya\headless\cms\api\Module',
     ]
