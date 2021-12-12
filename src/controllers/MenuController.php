@@ -25,9 +25,7 @@ class MenuController extends BaseController
                 'sql' => 'SELECT timestamp_update FROM cms_nav_item WHERE lang_id=:lang_id',
                 'params' => [':lang_id' => Yii::$app->request->get('langId', 0)]
             ],
-            'variations' => [
-                Yii::$app->request->get('langId', 0),
-            ]
+            'variations' => Yii::$app->request->get()
         ];
         return $behaviors;
     }
