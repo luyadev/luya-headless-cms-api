@@ -6,14 +6,14 @@
 
 [![LUYA](https://img.shields.io/badge/Powered%20by-LUYA-brightgreen.svg)](https://luya.io)
 
-This module provides and out of the box ready **API** in order to consume the CMS informations.
+This module provides and out of the box ready **API** in order to consume the LUYA CMS informations.
 
-+ The API is public and therefore requires not Authentication.
++ The API is public and therefore requires no authentication.
 + CORS works out of the box.
-+ Only needed informations will be exposed
-+ Its optimized with caching, which makes it very fast! (@TBD ;-))
++ Only required informations will be exposed to public.
++ Its optimized with caching, which makes it very fast!
 
-This can turn your exists LUYA website into an API which you can used to build your website with a JavaScript Framework like VUE or Angular!
+This can turn your exists LUYA CMS website into an API which you can use to build your website! This can be either frontend (JavaScript, Vue, React) or any backend technology.
 
 ## Installation
 
@@ -34,11 +34,7 @@ Add the module to the config
 ]
 ```
 
-## APIs 
-
-> The  module name is equal to the rest api prefix. When you register the module as `foobar` in the config the api would be `/foobar/menu?langId=x`.
-
-All APIs expect a GET request.
+The module name is equal to the rest api url. When you register the module as `foobar` in the config the api would be available as `/foobar/menu?langId=x`. By default its `api`. All APIs expect a GET request.
 
 ### Menu
 
