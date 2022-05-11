@@ -5,6 +5,28 @@ namespace luya\headless\cms\api\models;
 use luya\behaviors\JsonBehavior;
 use yii\db\ActiveRecord;
 
+/**
+ * Class PageBlock
+ * @package luya\headless\cms\api\models
+ *
+ * @property int $id
+ * @property int $block_id
+ * @property string $placeholder_var
+ * @property int $nav_item_page_id
+ * @property int $prev_id
+ * @property array|null $json_config_values
+ * @property array|null $json_config_cfg_values
+ * @property bool $is_dirty
+ * @property int $create_user_id
+ * @property int $update_user_id
+ * @property int $timestamp_create
+ * @property int $timestamp_update
+ * @property int $sort_index
+ * @property bool $is_hidden
+ * @property string $variation
+ *
+ * @property Block $block
+ */
 class PageBlock extends ActiveRecord
 {
     public static function tableName()
@@ -23,7 +45,7 @@ class PageBlock extends ActiveRecord
             [
                 'class' => JsonBehavior::class,
                 'attributes' => ['json_config_values', 'json_config_cfg_values'],
-            ]
+            ],
         ];
     }
 

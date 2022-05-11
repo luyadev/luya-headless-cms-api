@@ -8,6 +8,22 @@ use luya\helpers\Inflector;
 use ReflectionClass;
 use yii\db\ActiveRecord;
 
+/**
+ * Class NavItemPage
+ * @package luya\headless\cms\api\models
+ *
+ * @property int $id
+ * @property int $layout_id
+ * @property int $nav_item_id
+ * @property int $timestamp_create
+ * @property int $create_user_id
+ * @property string $version_alias
+ * @property int $timestamp_update
+ *
+ * @property NavItem $navItem
+ * @property Layout $layout
+ * @property PageBlock[] $blocks
+ */
 class NavItemPage extends ActiveRecord
 {
     public static function tableName()
@@ -38,16 +54,23 @@ class NavItemPage extends ActiveRecord
     public function getContent()
     {
         $result = [];
-        foreach ($this->layout->getPlaholdersList() as $placeholderName) {
+        foreach ($this->layout->getPlaceholdersList() as $placeholderName) {
 
             $placholders = $this->buildTree($this->blocks, 0, $placeholderName);
-            
+
             $result[$placeholderName] = array_key_exists($placeholderName, $placholders) ? $placholders[$placeholderName] : [];
         }
 
         return $result;
     }
 
+    /**
+     * @param PageBlock[] $blocks
+     * @param $prevId
+     * @param $placeholderName
+     * @return array
+     * @throws \ReflectionException
+     */
     private function buildTree(array $blocks, $prevId, $placeholderName)
     {
         $result = [];
@@ -56,7 +79,7 @@ class NavItemPage extends ActiveRecord
                 $placeholders = $this->buildTree($blocks, $block->id, $block->placeholder_var);
 
                 /** @var BlockInterface $object */
-                $object = $block->block->getClassObject();
+                $object = $block->block->getClassObject($block->id, 'frontend');
                 $object->setVarValues($block->getEnsuredValues());
                 $object->setCfgValues($block->getEnsuredConfigs());
 
@@ -73,7 +96,7 @@ class NavItemPage extends ActiveRecord
                     'cfgs' => $block->getEnsuredConfigs(),
                     'extras' => $object->getExtraVarValues(),
                 ];
-                
+
                 if ($object->getIsContainer()) {
                     // ensure all placeholders exists
                     foreach ($object->getConfigPlaceholdersExport() as $placeholderName) {
@@ -85,8 +108,8 @@ class NavItemPage extends ActiveRecord
             }
         }
 
-        foreach ($result as $placederVar => $items) {
-            ArrayHelper::multisort($result[$placederVar], 'index', SORT_ASC);
+        foreach ($result as $placeholderVar => $items) {
+            ArrayHelper::multisort($result[$placeholderVar], 'index', SORT_ASC);
         }
 
         return $result;
