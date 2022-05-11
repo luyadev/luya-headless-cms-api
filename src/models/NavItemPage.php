@@ -79,7 +79,7 @@ class NavItemPage extends ActiveRecord
                 $placeholders = $this->buildTree($blocks, $block->id, $block->placeholder_var);
 
                 /** @var BlockInterface $object */
-                $object = $block->block->getClassObject();
+                $object = $block->block->getClassObject($block->id, 'frontend');
                 $object->setVarValues($block->getEnsuredValues());
                 $object->setCfgValues($block->getEnsuredConfigs());
 
