@@ -5,6 +5,19 @@ namespace luya\headless\cms\api\models;
 use luya\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 
+/**
+ * Class Container
+ * @package luya\headless\cms\api\models
+ *
+ * @property int $id
+ * @property int $website_id
+ * @property string $name
+ * @property string $alias
+ * @property bool $is_deleted
+ *
+ * @property Nav[] $navs
+ * @property NavItem[] $items
+ */
 class Container extends ActiveRecord
 {
     public static function tableName()
@@ -20,8 +33,8 @@ class Container extends ActiveRecord
     public function getNavs()
     {
         return $this->hasMany(Nav::class, ['nav_container_id' => 'id'])
-        ->andOnCondition(['is_offline' => false, 'is_draft' => false, 'cms_nav.is_deleted' => false])
-        ->orderBy(['sort_index' => SORT_ASC]);
+            ->andOnCondition(['is_offline' => false, 'is_draft' => false, 'cms_nav.is_deleted' => false])
+            ->orderBy(['sort_index' => SORT_ASC]);
     }
 
     public function getItems()
@@ -56,13 +69,13 @@ class Container extends ActiveRecord
                     'children' => $this->buildTree($items, $item->id, $currentPath),
                 ];
 
-                $newItem['has_children'] = count($newItem['children']) > 0 ? true : false;
+                $newItem['has_children'] = count($newItem['children']) > 0;
                 $result[] = $newItem;
             }
         }
 
         ArrayHelper::multisort($result, 'index', SORT_ASC);
-      
+
         return $result;
     }
 }

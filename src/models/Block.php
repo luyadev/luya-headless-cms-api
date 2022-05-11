@@ -6,6 +6,17 @@ use luya\cms\base\BlockInterface;
 use Yii;
 use yii\db\ActiveRecord;
 
+/**
+ * Class Block
+ * @package luya\headless\cms\api\models
+ *
+ * @property int $id
+ * @property int $group_id
+ * @property string $class
+ * @property bool $is_disabled
+ *
+ * @property-read BlockInterface $classObject
+ */
 class Block extends ActiveRecord
 {
     public static function tableName()
