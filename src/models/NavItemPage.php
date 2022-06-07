@@ -85,6 +85,15 @@ class NavItemPage extends ActiveRecord
 
                 $reflect = new ReflectionClass($object);
 
+                if ($object->getIsContainer()) {
+                    // ensure all placeholders exists
+                    $insertedHolders = [];
+                    foreach ($object->getConfigPlaceholdersExport() as $placeholderName) {
+                        $insertedHolders[$placeholderName['var']] = array_key_exists($placeholderName['var'], $placeholders) ? $placeholders[$placeholderName['var']] : [];
+                    }
+                    $object->setPlaceholderValues($insertedHolders);
+                }
+
                 $newItem = [
                     'id' => $block->id,
                     'index' => $block->sort_index,
@@ -98,10 +107,7 @@ class NavItemPage extends ActiveRecord
                 ];
 
                 if ($object->getIsContainer()) {
-                    // ensure all placeholders exists
-                    foreach ($object->getConfigPlaceholdersExport() as $placeholderName) {
-                        $newItem['placeholders'][$placeholderName['var']] = array_key_exists($placeholderName['var'], $placeholders) ? $placeholders[$placeholderName['var']] : [];
-                    }
+                    $newItem['placeholders'] = $insertedHolders;
                 }
 
                 $result[$block->placeholder_var][] = $newItem;
