@@ -75,6 +75,7 @@ class NavItemPage extends ActiveRecord
     {
         $result = [];
         foreach ($blocks as $block) {
+            /** @var PageBlock $block */
             if ($block->prev_id == $prevId) {
                 $placeholders = $this->buildTree($blocks, $block->id, $block->placeholder_var);
 
