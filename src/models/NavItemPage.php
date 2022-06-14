@@ -75,6 +75,7 @@ class NavItemPage extends ActiveRecord
     {
         $result = [];
         foreach ($blocks as $block) {
+            /** @var PageBlock $block */
             if ($block->prev_id == $prevId) {
                 $placeholders = $this->buildTree($blocks, $block->id, $block->placeholder_var);
 
@@ -84,6 +85,15 @@ class NavItemPage extends ActiveRecord
                 $object->setCfgValues($block->getEnsuredConfigs());
 
                 $reflect = new ReflectionClass($object);
+
+                if ($object->getIsContainer()) {
+                    // ensure all placeholders exists
+                    $insertedHolders = [];
+                    foreach ($object->getConfigPlaceholdersExport() as $placeholderName) {
+                        $insertedHolders[$placeholderName['var']] = array_key_exists($placeholderName['var'], $placeholders) ? $placeholders[$placeholderName['var']] : [];
+                    }
+                    $object->setPlaceholderValues($insertedHolders);
+                }
 
                 $newItem = [
                     'id' => $block->id,
@@ -98,10 +108,7 @@ class NavItemPage extends ActiveRecord
                 ];
 
                 if ($object->getIsContainer()) {
-                    // ensure all placeholders exists
-                    foreach ($object->getConfigPlaceholdersExport() as $placeholderName) {
-                        $newItem['placeholders'][$placeholderName['var']] = array_key_exists($placeholderName['var'], $placeholders) ? $placeholders[$placeholderName['var']] : [];
-                    }
+                    $newItem['placeholders'] = $insertedHolders;
                 }
 
                 $result[$block->placeholder_var][] = $newItem;
